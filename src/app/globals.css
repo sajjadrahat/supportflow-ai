@@ -6,9 +6,9 @@
   --muted: #64748b;
   --border: #e2e8f0;
   --brand: #111827;
-  --brand-soft: #eef2ff;
-  --signal: #4f46e5;
-  --signal-soft: #eef2ff;
+  --brand-soft: #eaf5ff;
+  --signal: #2193f8;
+  --signal-soft: #eaf5ff;
   --surface: #ffffff;
 }
 
@@ -85,7 +85,7 @@ a:focus-visible {
 }
 
 .btn-primary:hover {
-  background: #4338ca;
+  background: #0e83eb;
 }
 
 .btn-secondary {
@@ -107,11 +107,58 @@ a:focus-visible {
 }
 
 .rule-grid {
-  background-image: radial-gradient(circle at 50% 0%, rgb(99 102 241 / 0.08), transparent 40%);
+  background-image: radial-gradient(circle at 50% 0%, rgb(33 147 248 / 0.11), transparent 42%);
 }
 
 .metric-value {
   font-size: clamp(2rem, 4vw, 2.7rem);
   font-weight: 650;
   letter-spacing: -0.05em;
+}
+
+@keyframes analysis-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes analysis-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  55% {
+    transform: translateX(55%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes analysis-pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.analysis-spinner {
+  animation: analysis-spin 0.8s linear infinite;
+}
+
+.analysis-progress {
+  animation: analysis-progress 1.35s ease-in-out infinite;
+}
+
+.analysis-dot {
+  animation: analysis-pulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analysis-spinner,
+  .analysis-progress,
+  .analysis-dot {
+    animation: none;
+  }
 }

@@ -43,7 +43,7 @@ export default async function DashboardPage() {
                   <span className="font-medium text-slate-700">{item.category}</span><span className="text-slate-500">{item.count}</span>
                 </div>
                 <div className="h-2 rounded-full bg-slate-100">
-                  <div className="h-2 rounded-full bg-indigo-500" style={{ width: `${(item.count / maximum) * 100}%` }} />
+                  <div className="h-2 rounded-full bg-[#2193f8]" style={{ width: `${(item.count / maximum) * 100}%` }} />
                 </div>
               </div>
             ))}

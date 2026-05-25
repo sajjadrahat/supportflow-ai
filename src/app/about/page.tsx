@@ -37,7 +37,7 @@ export default function AboutPage() {
           <ul className="mt-5 space-y-3">
             {stack.map((item) => (
               <li className="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 px-4 py-3 text-sm text-slate-700" key={item}>
-                <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                <span className="h-2 w-2 rounded-full bg-[#2193f8]" />
                 {item}
               </li>
             ))}

@@ -41,7 +41,7 @@ export function ConsoleShell({
                   href={item.href}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
                     isActive(pathname, item.href)
-                      ? "bg-indigo-50 text-indigo-700"
+                      ? "bg-[#eaf5ff] text-[#0574d4]"
                       : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                   }`}
                 >
@@ -72,7 +72,7 @@ export function ConsoleShell({
                 href={item.href}
                 className={`whitespace-nowrap rounded-lg border px-3 py-2 text-sm font-medium ${
                   isActive(pathname, item.href)
-                    ? "border-indigo-100 bg-indigo-50 text-indigo-700"
+                    ? "border-[#d5ebff] bg-[#eaf5ff] text-[#0574d4]"
                     : "border-slate-200 bg-white text-slate-600"
                 }`}
               >
@@ -82,7 +82,7 @@ export function ConsoleShell({
           </nav>
           <header className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <p className="text-sm font-medium text-indigo-600">SecureDesk demo</p>
+              <p className="text-sm font-medium text-[#2193f8]">SecureDesk demo</p>
               <h1 className="mt-1 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">{title}</h1>
               <p className="mt-2 text-sm text-slate-500">{description}</p>
             </div>

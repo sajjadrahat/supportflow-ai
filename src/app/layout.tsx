@@ -14,7 +14,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur">
           <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8" aria-label="Primary navigation">
             <Link href="/" className="flex items-center gap-3 font-semibold text-slate-950">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-xs font-bold text-white">SF</span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#2193f8] text-xs font-bold text-white">SF</span>
               <span className="text-[15px] tracking-tight">SupportFlow <span className="font-normal text-slate-400">AI</span></span>
             </Link>
             <div className="flex items-center gap-2 text-sm font-medium text-slate-500 sm:gap-7">

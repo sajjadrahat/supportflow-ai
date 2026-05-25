@@ -22,11 +22,14 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
     setError("");
     setNotice("");
     try {
-      const response = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ticketId: ticket.id }),
-      });
+      const [response] = await Promise.all([
+        fetch("/api/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ticketId: ticket.id }),
+        }),
+        new Promise((resolve) => window.setTimeout(resolve, 850)),
+      ]);
       const payload = (await response.json()) as AnalysisResult | { error: string };
       if (!response.ok || "error" in payload) throw new Error("error" in payload ? payload.error : "Analysis failed.");
       setAnalysis(payload);
@@ -77,7 +80,7 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
       <aside className="card h-fit overflow-hidden lg:sticky lg:top-5">
         <div className="border-b border-slate-100 bg-slate-50/70 px-6 py-5">
           <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Incoming ticket</p>
-          <p className="mt-3 font-mono text-sm font-medium text-indigo-600">{ticket.id}</p>
+          <p className="mt-3 font-mono text-sm font-medium text-[#2193f8]">{ticket.id}</p>
         </div>
         <div className="p-6">
         <div className="flex items-start justify-between gap-3">
@@ -100,23 +103,43 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
       <section className="space-y-5" aria-label="AI analysis workspace">
         {!analysis && (
           <div className="card flex flex-col items-center justify-center p-10 text-center sm:min-h-[360px]">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                <path d="M12 3v3m0 12v3M3 12h3m12 0h3M6.34 6.34l2.12 2.12m7.08 7.08 2.12 2.12m0-11.32-2.12 2.12m-7.08 7.08-2.12 2.12" strokeLinecap="round" />
-              </svg>
-            </span>
-            <h2 className="mt-6 text-xl font-semibold tracking-tight text-slate-950">Analyze this ticket</h2>
-            <p className="mt-3 max-w-md text-sm leading-7 text-slate-500">
-              Retrieve documented guidance and prepare a reviewed recommendation. Saved analyses are reused to keep this public demo cost controlled.
-            </p>
-            <button
-              type="button"
-              onClick={analyze}
-              disabled={loading}
-              className="btn-primary mt-7 disabled:opacity-60"
-            >
-              {loading ? "Analyzing ticket..." : "Analyze with AI"}
-            </button>
+            {loading ? (
+              <div aria-live="polite" className="flex w-full max-w-md flex-col items-center" role="status">
+                <span className="analysis-spinner flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#d5ebff] border-t-[#2193f8] bg-[#eaf5ff]/40" />
+                <h2 className="mt-6 text-xl font-semibold tracking-tight text-slate-950">Analyzing ticket</h2>
+                <p className="mt-3 text-sm leading-7 text-slate-500">Retrieving knowledge and preparing a grounded suggestion.</p>
+                <div className="mt-7 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                  <span className="analysis-progress block h-full w-2/5 rounded-full bg-[#2193f8]" />
+                </div>
+                <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">
+                  {["Retrieve", "Ground", "Draft"].map((stage, index) => (
+                    <span className="flex items-center gap-2" key={stage}>
+                      <span className="analysis-dot h-1.5 w-1.5 rounded-full bg-[#2193f8]" style={{ animationDelay: `${index * 180}ms` }} />
+                      {stage}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <>
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf5ff] text-[#2193f8]">
+                  <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                    <path d="M12 3v3m0 12v3M3 12h3m12 0h3M6.34 6.34l2.12 2.12m7.08 7.08 2.12 2.12m0-11.32-2.12 2.12m-7.08 7.08-2.12 2.12" strokeLinecap="round" />
+                  </svg>
+                </span>
+                <h2 className="mt-6 text-xl font-semibold tracking-tight text-slate-950">Analyze this ticket</h2>
+                <p className="mt-3 max-w-md text-sm leading-7 text-slate-500">
+                  Retrieve documented guidance and prepare a reviewed recommendation. Saved analyses are reused to keep this public demo cost controlled.
+                </p>
+                <button
+                  type="button"
+                  onClick={analyze}
+                  className="btn-primary mt-7"
+                >
+                  Analyze with AI
+                </button>
+              </>
+            )}
           </div>
         )}
 
@@ -137,7 +160,7 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
                 </div>
                 <div className="flex gap-2">
                   <span className={`pill ${urgencyClass(analysis.triage.urgency)}`}>{analysis.triage.urgency}</span>
-                  <span className="pill bg-indigo-50 text-indigo-700">{Math.round(analysis.triage.confidence * 100)}% confidence</span>
+                  <span className="pill bg-[#eaf5ff] text-[#0574d4]">{Math.round(analysis.triage.confidence * 100)}% confidence</span>
                 </div>
               </div>
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -176,7 +199,7 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
                   {analysis.articles.map((article) => (
                     <article className="rounded-xl border border-slate-200 p-4" key={article.id}>
                       <div className="flex items-center justify-between gap-4">
-                        <Link className="text-sm font-medium text-indigo-700 hover:underline" href={`/demo/knowledge/${article.id}`}>{article.title}</Link>
+                        <Link className="text-sm font-medium text-[#0574d4] hover:underline" href={`/demo/knowledge/${article.id}`}>{article.title}</Link>
                         <span className="pill bg-slate-100 text-slate-600">{article.relevance}% match</span>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-slate-500">{article.excerpt}</p>

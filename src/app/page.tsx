@@ -12,8 +12,8 @@ export default function Home() {
     <main>
       <section className="rule-grid border-b border-slate-200">
         <div className="mx-auto max-w-7xl px-5 pb-16 pt-16 text-center lg:px-8 lg:pb-24 lg:pt-24">
-          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-3.5 py-2 text-xs font-medium text-indigo-700 shadow-sm">
-            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#d5ebff] bg-white px-3.5 py-2 text-xs font-medium text-[#0574d4] shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-[#2193f8]" />
             Portfolio demonstration using fictional data
           </span>
           <h1 className="display mx-auto mt-7 max-w-4xl text-4xl leading-[1.08] text-slate-950 sm:text-6xl">
@@ -31,11 +31,11 @@ export default function Home() {
             <div className="grid min-h-[430px] overflow-hidden rounded-xl border border-slate-100 bg-slate-50 text-left md:grid-cols-[196px_1fr]">
               <aside className="hidden border-r border-slate-200 bg-white p-4 md:block">
                 <div className="flex items-center gap-2 px-2 text-sm font-semibold text-slate-900">
-                  <span className="h-7 w-7 rounded-lg bg-indigo-600" />
+                  <span className="h-7 w-7 rounded-lg bg-[#2193f8]" />
                   SecureDesk
                 </div>
                 {["Tickets", "Analytics", "Knowledge", "Safety"].map((item, index) => (
-                  <div key={item} className={`mt-5 rounded-lg px-3 py-2 text-sm ${index === 0 ? "bg-indigo-50 font-medium text-indigo-700" : "text-slate-500"}`}>{item}</div>
+                  <div key={item} className={`mt-5 rounded-lg px-3 py-2 text-sm ${index === 0 ? "bg-[#eaf5ff] font-medium text-[#0574d4]" : "text-slate-500"}`}>{item}</div>
                 ))}
               </aside>
               <div className="p-5 sm:p-7">
@@ -54,7 +54,7 @@ export default function Home() {
                   </div>
                   <div className="rounded-xl border border-slate-200 bg-white p-5">
                     <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Retrieved source</p>
-                    <p className="mt-3 text-sm font-semibold text-indigo-700">Report a Suspected Impersonation Email</p>
+                    <p className="mt-3 text-sm font-semibold text-[#0574d4]">Report a Suspected Impersonation Email</p>
                     <p className="mt-2 text-sm text-slate-500">99% match / cited in reply</p>
                   </div>
                 </div>
@@ -79,7 +79,7 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-3">
           {features.map((feature) => (
             <article className="card p-6" key={feature.title}>
-              <span className="mb-5 block h-9 w-9 rounded-lg bg-indigo-50 ring-1 ring-indigo-100" />
+              <span className="mb-5 block h-9 w-9 rounded-lg bg-[#eaf5ff] ring-1 ring-[#d5ebff]" />
               <h2 className="font-semibold text-slate-900">{feature.title}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-500">{feature.text}</p>
             </article>

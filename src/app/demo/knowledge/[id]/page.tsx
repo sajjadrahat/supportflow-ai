@@ -16,7 +16,7 @@ export default async function KnowledgePage({ params }: { params: Promise<{ id: 
       <article className="card max-w-3xl overflow-hidden">
         <div className="border-b border-slate-200 p-7 sm:p-9">
         <div className="flex flex-wrap justify-between gap-3">
-          <span className="pill bg-indigo-50 text-indigo-700">{article.category}</span>
+          <span className="pill bg-[#eaf5ff] text-[#0574d4]">{article.category}</span>
           <span className="text-sm text-slate-500">Updated {article.lastUpdated}</span>
         </div>
         <h2 className="mt-7 text-2xl font-semibold tracking-tight text-slate-950">{article.title}</h2>

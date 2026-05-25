@@ -68,9 +68,9 @@ export function TicketInbox({ tickets }: { tickets: Ticket[] }) {
               href={`/demo/tickets/${ticket.id}`}
               className="group block border-b border-slate-100 px-6 py-5 last:border-b-0 hover:bg-slate-50/70 md:grid md:grid-cols-[105px_1fr_175px_120px_120px] md:items-center md:gap-4"
             >
-              <span className="font-mono text-xs font-semibold text-indigo-600">{ticket.id}</span>
+              <span className="font-mono text-xs font-semibold text-[#2193f8]">{ticket.id}</span>
               <div className="mt-2 md:mt-0">
-                <p className="text-sm font-medium text-slate-900 group-hover:text-indigo-700">{ticket.subject}</p>
+                <p className="text-sm font-medium text-slate-900 group-hover:text-[#0574d4]">{ticket.subject}</p>
                 <p className="mt-1.5 text-xs text-slate-500">{ticket.categoryHint}</p>
               </div>
               <span className="mt-2 block text-sm text-slate-600 md:mt-0">{ticket.customerName}</span>
