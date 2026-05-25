@@ -5,9 +5,9 @@ import Link from "next/link";
 import type { Ticket, Urgency } from "@/lib/types";
 
 function urgencyStyle(urgency: Urgency) {
-  if (urgency === "High" || urgency === "Critical") return "bg-[#f6e1d9] text-[#933c27]";
-  if (urgency === "Medium") return "bg-[#efe7d4] text-[#85621e]";
-  return "bg-[#e5ece8] text-[#426158]";
+  if (urgency === "High" || urgency === "Critical") return "bg-red-50 text-red-700";
+  if (urgency === "Medium") return "bg-amber-50 text-amber-700";
+  return "bg-slate-100 text-slate-600";
 }
 
 export function TicketInbox({ tickets }: { tickets: Ticket[] }) {
@@ -20,19 +20,20 @@ export function TicketInbox({ tickets }: { tickets: Ticket[] }) {
 
   return (
     <>
-      <div className="mt-11 grid gap-5 lg:grid-cols-[250px_1fr]">
-        <aside className="panel-dark h-fit rounded-[1.35rem] p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8da7a0]">Queue status</p>
-          <p className="display mt-5 text-6xl text-[#f8f3e8]">{String(filtered.length).padStart(2, "0")}</p>
-          <p className="mt-2 text-sm text-[#abbcb6]">Visible sample cases</p>
-          <div className="mt-8 space-y-4 border-t border-white/10 pt-6 text-sm text-[#bdc8c3]">
-            <p><span className="mr-3 inline-block h-2 w-2 rounded-full bg-[#f2a387]" />Security risk included</p>
-            <p><span className="mr-3 inline-block h-2 w-2 rounded-full bg-[#65bd9e]" />Grounding enabled</p>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {[
+          ["Open tickets", tickets.length],
+          ["High priority", tickets.filter((ticket) => ticket.initialUrgency === "High").length],
+          ["Visible results", filtered.length],
+        ].map(([label, value]) => (
+          <div className="card p-5" key={label}>
+            <p className="text-sm text-slate-500">{label}</p>
+            <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{value}</p>
           </div>
-        </aside>
-        <div>
-      <div className="card flex flex-col gap-4 p-4 sm:flex-row sm:items-end">
-        <label className="w-full max-w-xs text-sm font-medium text-[#52605a]">
+        ))}
+      </div>
+      <div className="card mt-5 flex flex-col gap-4 p-4 sm:flex-row sm:items-end">
+        <label className="w-full max-w-xs text-sm font-medium text-slate-700">
           Status filter
           <select className="input mt-2" value={status} onChange={(event) => setStatus(event.target.value)}>
             <option>All</option>
@@ -41,7 +42,7 @@ export function TicketInbox({ tickets }: { tickets: Ticket[] }) {
             <option>Needs Review</option>
           </select>
         </label>
-        <label className="w-full max-w-xs text-sm font-medium text-[#52605a]">
+        <label className="w-full max-w-xs text-sm font-medium text-slate-700">
           Priority filter
           <select className="input mt-2" value={urgency} onChange={(event) => setUrgency(event.target.value)}>
             <option>All</option>
@@ -51,36 +52,34 @@ export function TicketInbox({ tickets }: { tickets: Ticket[] }) {
             <option>Critical</option>
           </select>
         </label>
-        <p className="text-sm text-[#68716c] sm:ml-auto">Sample data only</p>
+        <p className="text-sm text-slate-500 sm:ml-auto">Sample data only</p>
       </div>
 
       {filtered.length === 0 ? (
-        <div className="card mt-5 p-10 text-center text-sm text-[#68716c]">No tickets match these filters.</div>
+        <div className="card mt-5 p-10 text-center text-sm text-slate-500">No tickets match these filters.</div>
       ) : (
         <div className="card mt-5 overflow-hidden">
-          <div className="hidden grid-cols-[105px_1fr_175px_120px_120px] gap-4 border-b bg-[#f0ece3] px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6d756c] md:grid">
+          <div className="hidden grid-cols-[105px_1fr_175px_120px_120px] gap-4 border-b bg-slate-50 px-6 py-4 text-xs font-medium uppercase tracking-wider text-slate-400 md:grid">
             <span>Case</span><span>Incoming signal</span><span>Requester</span><span>Received</span><span>Priority</span>
           </div>
           {filtered.map((ticket) => (
             <Link
               key={ticket.id}
               href={`/demo/tickets/${ticket.id}`}
-              className="group block border-b px-6 py-5 last:border-b-0 hover:bg-[#f8f5ee] md:grid md:grid-cols-[105px_1fr_175px_120px_120px] md:items-center md:gap-4"
+              className="group block border-b border-slate-100 px-6 py-5 last:border-b-0 hover:bg-slate-50/70 md:grid md:grid-cols-[105px_1fr_175px_120px_120px] md:items-center md:gap-4"
             >
-              <span className="font-mono text-xs font-semibold text-[#15715f]">{ticket.id}</span>
+              <span className="font-mono text-xs font-semibold text-indigo-600">{ticket.id}</span>
               <div className="mt-2 md:mt-0">
-                <p className="text-sm font-semibold text-[#152329] group-hover:text-[#15715f]">{ticket.subject}</p>
-                <p className="mt-1.5 text-xs text-[#68716c]">{ticket.categoryHint}</p>
+                <p className="text-sm font-medium text-slate-900 group-hover:text-indigo-700">{ticket.subject}</p>
+                <p className="mt-1.5 text-xs text-slate-500">{ticket.categoryHint}</p>
               </div>
-              <span className="mt-2 block text-sm text-[#53605c] md:mt-0">{ticket.customerName}</span>
-              <span className="mt-2 block text-sm text-[#68716c] md:mt-0">{new Date(ticket.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+              <span className="mt-2 block text-sm text-slate-600 md:mt-0">{ticket.customerName}</span>
+              <span className="mt-2 block text-sm text-slate-500 md:mt-0">{new Date(ticket.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
               <span className={`pill mt-3 w-fit md:mt-0 ${urgencyStyle(ticket.initialUrgency)}`}>{ticket.initialUrgency}</span>
             </Link>
           ))}
         </div>
       )}
-      </div>
-      </div>
     </>
   );
 }

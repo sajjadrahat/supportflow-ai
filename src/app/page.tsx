@@ -1,91 +1,93 @@
 import Link from "next/link";
 import { Disclaimer } from "@/components/disclaimer";
 
-const steps = [
-  ["01", "Read the signal", "Categorize urgency and surface the details still needed."],
-  ["02", "Ground the reply", "Match the case to approved SecureDesk sample guidance."],
-  ["03", "Decide with context", "Review a reply or create a clear engineering brief."],
+const features = [
+  { title: "Grounded retrieval", text: "Responses cite matching SecureDesk knowledge content." },
+  { title: "Human approval", text: "No suggestion is sent or escalated automatically." },
+  { title: "Cost controlled", text: "Stored analyses are safely reused in the public demo." },
 ];
 
 export default function Home() {
   return (
     <main>
-      <section className="rule-grid border-b">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 lg:grid-cols-[1.04fr_0.96fr] lg:px-8 lg:py-24">
-        <div>
-          <p className="eyebrow mb-6">Support operations / portfolio demonstration</p>
-          <h1 className="display max-w-2xl text-[3.2rem] leading-[1.02] text-[#152329] sm:text-[4.8rem]">
-            Turn support signals into reviewed action.
+      <section className="rule-grid border-b border-slate-200">
+        <div className="mx-auto max-w-7xl px-5 pb-16 pt-16 text-center lg:px-8 lg:pb-24 lg:pt-24">
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-3.5 py-2 text-xs font-medium text-indigo-700 shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-indigo-500" />
+            Portfolio demonstration using fictional data
+          </span>
+          <h1 className="display mx-auto mt-7 max-w-4xl text-4xl leading-[1.08] text-slate-950 sm:text-6xl">
+            Support triage, grounded by documentation.
           </h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-[#5e6964]">
-            A grounded triage console for fictional SecureDesk cases: retrieve documented guidance, prepare a response, and hand off risk with a human still at the controls.
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+            SupportFlow AI helps a support specialist review sample tickets, retrieve relevant guidance, draft a response and prepare escalations with a human in control.
           </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/demo" className="btn-primary">Enter ticket console</Link>
-            <a href="#workflow" className="btn-secondary">How it works</a>
+          <div className="mt-9 flex justify-center gap-3">
+            <Link href="/demo" className="btn-primary">Try the demo</Link>
+            <Link href="/about" className="btn-secondary">View architecture</Link>
           </div>
-          <div className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-[#d9d3c5] pt-7 text-sm">
-            <div><p className="eyebrow">Dataset</p><p className="mt-2 font-medium">8 fictional cases</p></div>
-            <div><p className="eyebrow">Grounding</p><p className="mt-2 font-medium">12 knowledge articles</p></div>
-            <div><p className="eyebrow">Control</p><p className="mt-2 font-medium">Human approval</p></div>
-          </div>
-        </div>
-        <div className="panel-dark overflow-hidden rounded-[1.75rem] shadow-2xl shadow-[#10252b]/15">
-          <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 text-xs uppercase tracking-[0.18em] text-[#9cb1aa]">
-            <span>Case intelligence</span><span className="rounded-full bg-[#193c39] px-3 py-1 text-[#8ad1bd]">Review required</span>
-          </div>
-          <div className="p-6 sm:p-8">
-          <div className="mb-7 flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-[#829993]">SD-1068 / Incoming</p>
-              <p className="mt-3 text-xl leading-snug text-[#fbf6eb]">Suspicious training email link received by employees</p>
-            </div>
-            <span className="pill bg-[#513029] text-[#ffb9a2]">High</span>
-          </div>
-          <div className="space-y-4">
-            <div className="rounded-2xl bg-white/[0.06] p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#88aaa1]">Suggested path</p>
-              <div className="mt-4 flex items-end justify-between gap-4">
-                <p className="text-lg">Security / Phishing</p>
-                <p className="text-sm text-[#ffb9a2]">Escalate</p>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-white/10 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#88aaa1]">Grounded source / 99% match</p>
-              <p className="mt-3 text-sm leading-6 text-[#e5e1d7]">Report a Suspected SecureDesk Impersonation Email</p>
-            </div>
-            <div className="flex items-center justify-between rounded-2xl bg-[#e5efe8] px-5 py-4 text-sm font-medium text-[#16352f]">
-              <span>Draft prepared for review</span><span aria-hidden="true">&rarr;</span>
-            </div>
-          </div>
-        </div>
-        </div>
-        </div>
-      </section>
 
-      <section id="workflow" className="bg-[#fffdf8]">
-        <div className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="max-w-sm">
-            <p className="eyebrow">Workflow</p>
-            <h2 className="display mt-4 text-4xl leading-tight">Evidence before response.</h2>
-            <p className="mt-5 leading-7 text-[#68716c]">The assistant does not send anything. It prepares an answer with visible sources for a specialist to accept, change or reject.</p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {steps.map(([number, title, description]) => (
-              <div key={number} className="border-l border-[#d8d2c4] px-5 py-3">
-                <p className="eyebrow">{number}</p>
-                <h3 className="mt-8 text-lg font-semibold">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#68716c]">{description}</p>
+          <div className="mx-auto mt-14 max-w-5xl overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/50 sm:p-3">
+            <div className="grid min-h-[430px] overflow-hidden rounded-xl border border-slate-100 bg-slate-50 text-left md:grid-cols-[196px_1fr]">
+              <aside className="hidden border-r border-slate-200 bg-white p-4 md:block">
+                <div className="flex items-center gap-2 px-2 text-sm font-semibold text-slate-900">
+                  <span className="h-7 w-7 rounded-lg bg-indigo-600" />
+                  SecureDesk
+                </div>
+                {["Tickets", "Analytics", "Knowledge", "Safety"].map((item, index) => (
+                  <div key={item} className={`mt-5 rounded-lg px-3 py-2 text-sm ${index === 0 ? "bg-indigo-50 font-medium text-indigo-700" : "text-slate-500"}`}>{item}</div>
+                ))}
+              </aside>
+              <div className="p-5 sm:p-7">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-medium text-slate-400">SD-1068 / SECURITY REPORT</p>
+                    <h2 className="mt-2 text-lg font-semibold text-slate-900">Suspicious training email link</h2>
+                  </div>
+                  <span className="pill bg-red-50 text-red-700">High urgency</span>
+                </div>
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-200 bg-white p-5">
+                    <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Recommended action</p>
+                    <p className="mt-3 font-semibold text-slate-900">Escalate to Engineering</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-500">Possible phishing exposure reported by multiple employees.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-200 bg-white p-5">
+                    <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Retrieved source</p>
+                    <p className="mt-3 text-sm font-semibold text-indigo-700">Report a Suspected Impersonation Email</p>
+                    <p className="mt-2 text-sm text-slate-500">99% match / cited in reply</p>
+                  </div>
+                </div>
+                <div className="mt-4 rounded-xl border border-slate-200 bg-white p-5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-medium text-slate-700">Draft response</p>
+                    <span className="pill bg-amber-50 text-amber-700">Review before sending</span>
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <span className="block h-2.5 w-11/12 rounded bg-slate-100" />
+                    <span className="block h-2.5 w-full rounded bg-slate-100" />
+                    <span className="block h-2.5 w-3/4 rounded bg-slate-100" />
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
-        <Disclaimer />
+      <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <div className="grid gap-4 md:grid-cols-3">
+          {features.map((feature) => (
+            <article className="card p-6" key={feature.title}>
+              <span className="mb-5 block h-9 w-9 rounded-lg bg-indigo-50 ring-1 ring-indigo-100" />
+              <h2 className="font-semibold text-slate-900">{feature.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-500">{feature.text}</p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-8">
+          <Disclaimer />
+        </div>
       </section>
     </main>
   );

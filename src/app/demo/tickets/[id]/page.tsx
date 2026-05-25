@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTicket } from "@/data/seed";
 import { Disclaimer } from "@/components/disclaimer";
 import { TicketWorkspace } from "@/components/ticket-workspace";
+import { ConsoleShell } from "@/components/console-shell";
 
 export default async function TicketPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -10,16 +11,13 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
   if (!ticket) notFound();
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-      <Link href="/demo" className="text-sm font-semibold text-[#15715f] hover:underline">&larr; Return to queue</Link>
-      <div className="mt-6 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-        <div>
-          <p className="eyebrow">Case workspace</p>
-          <h1 className="display mt-3 text-5xl">{ticket.id}</h1>
-        </div>
-        <div className="md:max-w-lg"><Disclaimer /></div>
-      </div>
+    <ConsoleShell
+      title={`Case ${ticket.id}`}
+      description="Review the customer message, grounded analysis and recommended action."
+      action={<Link href="/demo" className="btn-secondary">&larr; Inbox</Link>}
+    >
+      <div className="mb-5"><Disclaimer /></div>
       <TicketWorkspace ticket={ticket} />
-    </main>
+    </ConsoleShell>
   );
 }

@@ -1,6 +1,7 @@
 import { Disclaimer } from "@/components/disclaimer";
 import { getMetrics } from "@/lib/db";
 import { getRuntimeBindings } from "@/lib/runtime";
+import { ConsoleShell } from "@/components/console-shell";
 
 export const dynamic = "force-dynamic";
 
@@ -17,47 +18,42 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
-      <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
-        <div>
-          <p className="eyebrow">Signals / demo usage</p>
-          <h1 className="display mt-4 text-5xl">Review ledger</h1>
-          <p className="mt-4 max-w-md leading-7 text-[#68716c]">Demonstration events from grounded analyses and human decisions.</p>
-        </div>
-        <Disclaimer />
-      </div>
-
-      <div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <ConsoleShell
+      title="Demo analytics"
+      description="Stored usage statistics from generated analyses and human feedback."
+      action={<div className="max-w-md"><Disclaimer /></div>}
+    >
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {cards.map(([label, value]) => (
           <div className="card p-6" key={label}>
-            <p className="eyebrow">{label}</p>
-            <p className="metric-value mt-7">{value}</p>
+            <p className="text-sm text-slate-500">{label}</p>
+            <p className="metric-value mt-4 text-slate-950">{value}</p>
           </div>
         ))}
       </div>
 
       <section className="card mt-6 p-7">
-        <p className="eyebrow">Distribution</p>
-        <h2 className="display mt-3 text-3xl">Analyzed categories</h2>
+        <h2 className="text-lg font-semibold text-slate-950">Ticket categories</h2>
+        <p className="mt-1 text-sm text-slate-500">Distribution of persisted demo analyses.</p>
         {metrics.categories.length ? (
           <div className="mt-6 space-y-4">
             {metrics.categories.map((item) => (
               <div key={item.category}>
                 <div className="mb-2 flex justify-between text-sm">
-                  <span>{item.category}</span><span className="text-[#68716c]">{item.count}</span>
+                  <span className="font-medium text-slate-700">{item.category}</span><span className="text-slate-500">{item.count}</span>
                 </div>
-                <div className="h-2.5 rounded-full bg-[#eee9de]">
-                  <div className="h-2.5 rounded-full bg-[#15715f]" style={{ width: `${(item.count / maximum) * 100}%` }} />
+                <div className="h-2 rounded-full bg-slate-100">
+                  <div className="h-2 rounded-full bg-indigo-500" style={{ width: `${(item.count / maximum) * 100}%` }} />
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="mt-6 rounded-2xl bg-[#f0ece3] p-8 text-center text-sm text-[#68716c]">
+          <div className="mt-6 rounded-xl bg-slate-50 p-8 text-center text-sm text-slate-500">
             No persisted demo analyses yet. Analyze a fictional ticket with D1 connected to populate these statistics.
           </div>
         )}
       </section>
-    </main>
+    </ConsoleShell>
   );
 }

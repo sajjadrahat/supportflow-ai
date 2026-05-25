@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f1ea;
-  --foreground: #152329;
-  --muted: #68716c;
-  --border: #ddd7c9;
-  --brand: #10252b;
-  --brand-soft: #e7eee9;
-  --signal: #15715f;
-  --signal-soft: #def1e9;
-  --sand: #ece5d8;
-  --surface: #fffdf8;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --brand: #111827;
+  --brand-soft: #eef2ff;
+  --signal: #4f46e5;
+  --signal-soft: #eef2ff;
+  --surface: #ffffff;
 }
 
 * {
@@ -20,8 +19,8 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
-  background-image: radial-gradient(circle at 12% 0%, rgb(21 113 95 / 0.07), transparent 34%);
+  font-family: Inter, "SF Pro Text", "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -38,25 +37,24 @@ button:disabled {
 
 .card {
   border: 1px solid var(--border);
-  border-radius: 1.35rem;
+  border-radius: 1rem;
   background: var(--surface);
-  box-shadow: 0 1px 2px rgb(17 32 38 / 0.04), 0 16px 45px rgb(17 32 38 / 0.035);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.03);
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
   border-radius: 9999px;
-  padding: 0.3rem 0.72rem;
+  padding: 0.32rem 0.68rem;
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
 }
 
 .input {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 0.8rem;
+  border-radius: 0.65rem;
   background: var(--surface);
   padding: 0.72rem 0.8rem;
   color: var(--foreground);
@@ -70,33 +68,24 @@ a:focus-visible {
 }
 
 .display {
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  letter-spacing: -0.05em;
-}
-
-.eyebrow {
-  color: var(--signal);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-weight: 650;
+  letter-spacing: -0.045em;
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  background: var(--brand);
-  padding: 0.8rem 1.3rem;
+  border-radius: 0.7rem;
+  background: var(--signal);
+  padding: 0.76rem 1.15rem;
   color: white;
   font-size: 0.92rem;
   font-weight: 600;
 }
 
 .btn-primary:hover {
-  background: #1a353b;
+  background: #4338ca;
 }
 
 .btn-secondary {
@@ -104,32 +93,25 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 0.7rem;
   background: var(--surface);
-  padding: 0.78rem 1.25rem;
+  padding: 0.74rem 1.15rem;
   color: var(--foreground);
   font-size: 0.92rem;
   font-weight: 600;
 }
 
 .btn-secondary:hover {
-  border-color: #b7af9d;
-}
-
-.panel-dark {
-  background: var(--brand);
-  color: #f8f3e8;
+  border-color: #cbd5e1;
+  background: #f8fafc;
 }
 
 .rule-grid {
-  background-image:
-    linear-gradient(rgb(21 35 41 / 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(21 35 41 / 0.035) 1px, transparent 1px);
-  background-size: 44px 44px;
+  background-image: radial-gradient(circle at 50% 0%, rgb(99 102 241 / 0.08), transparent 40%);
 }
 
 .metric-value {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.2rem, 4vw, 3rem);
-  letter-spacing: -0.06em;
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  font-weight: 650;
+  letter-spacing: -0.05em;
 }
