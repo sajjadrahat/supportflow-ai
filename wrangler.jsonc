@@ -18,7 +18,7 @@
     {
       "binding": "DB",
       "database_name": "supportflow-db",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "2ed2dc89-f5d7-4ad8-b34e-ffc49246b66c",
       "migrations_dir": "migrations"
     }
   ],
