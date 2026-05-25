@@ -10,12 +10,12 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
   if (!ticket) notFound();
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-      <Link href="/demo" className="text-sm font-medium text-[#305b9d] hover:underline">&larr; Back to ticket inbox</Link>
+    <main className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
+      <Link href="/demo" className="text-sm font-semibold text-[#15715f] hover:underline">&larr; Return to queue</Link>
       <div className="mt-6 flex flex-col justify-between gap-5 md:flex-row md:items-end">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-widest text-[#305b9d]">Analysis Workspace</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">{ticket.id}</h1>
+          <p className="eyebrow">Case workspace</p>
+          <h1 className="display mt-3 text-5xl">{ticket.id}</h1>
         </div>
         <div className="md:max-w-lg"><Disclaimer /></div>
       </div>

@@ -36,6 +36,8 @@ export async function createAnalysisContent(
   const client = new OpenAI({ apiKey: config.apiKey });
   const response = await client.responses.parse({
     model: config.model ?? "gpt-4o-mini",
+    store: false,
+    max_output_tokens: 1200,
     input: [
       {
         role: "system",

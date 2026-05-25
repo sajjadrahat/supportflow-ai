@@ -1,9 +1,9 @@
 import type { RecommendedAction } from "@/lib/types";
 
 const styles: Record<RecommendedAction, string> = {
-  "Resolve in Support": "bg-emerald-50 text-emerald-700 border-emerald-100",
-  "Request More Information": "bg-amber-50 text-amber-800 border-amber-100",
-  "Escalate to Engineering": "bg-red-50 text-red-700 border-red-100",
+  "Resolve in Support": "bg-[#def1e9] text-[#155b4e] border-[#badbce]",
+  "Request More Information": "bg-[#efe7d4] text-[#80601e] border-[#ddcd9f]",
+  "Escalate to Engineering": "bg-[#f6e1d9] text-[#8c3624] border-[#efc0b2]",
 };
 
 export function DecisionCard({
@@ -14,10 +14,14 @@ export function DecisionCard({
   reason: string;
 }) {
   return (
-    <section className="card p-5" aria-label="Escalation decision">
-      <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Recommended decision</p>
-      <div className={`mt-3 inline-flex rounded-lg border px-3 py-2 text-sm font-semibold ${styles[action]}`}>{action}</div>
-      {action === "Escalate to Engineering" && reason ? <p className="mt-3 text-sm leading-6 text-slate-600">{reason}</p> : null}
+    <section className="card overflow-hidden" aria-label="Escalation decision">
+      <div className="border-b bg-[#f0ece3] px-6 py-4">
+        <p className="eyebrow">Decision gate</p>
+      </div>
+      <div className="p-6">
+        <div className={`inline-flex rounded-full border px-4 py-2 text-sm font-semibold ${styles[action]}`}>{action}</div>
+        {action === "Escalate to Engineering" && reason ? <p className="mt-4 max-w-xl text-sm leading-7 text-[#59645f]">{reason}</p> : null}
+      </div>
     </section>
   );
 }

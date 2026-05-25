@@ -1,5 +1,32 @@
 import type { AnalysisResult, DemoMetrics, FeedbackAction } from "@/lib/types";
 
+export async function getLatestAnalysis(db: D1Database | undefined, ticketId: string): Promise<AnalysisResult | null> {
+  if (!db) return null;
+  const stored = await db
+    .prepare("SELECT analysis_json FROM analyses WHERE ticket_id = ? ORDER BY created_at DESC LIMIT 1")
+    .bind(ticketId)
+    .first<{ analysis_json: string }>();
+  if (!stored) return null;
+  return { ...(JSON.parse(stored.analysis_json) as AnalysisResult), cached: true, persisted: true };
+}
+
+export async function acquireAnalysisGenerationLock(
+  db: D1Database | undefined,
+  ticketId: string,
+): Promise<boolean> {
+  if (!db) return true;
+  const result = await db
+    .prepare("INSERT OR IGNORE INTO analysis_generation_locks (ticket_id, created_at) VALUES (?, ?)")
+    .bind(ticketId, new Date().toISOString())
+    .run();
+  return Boolean(result.meta.changes);
+}
+
+export async function releaseAnalysisGenerationLock(db: D1Database | undefined, ticketId: string): Promise<void> {
+  if (!db) return;
+  await db.prepare("DELETE FROM analysis_generation_locks WHERE ticket_id = ?").bind(ticketId).run();
+}
+
 export async function saveAnalysis(db: D1Database | undefined, analysis: AnalysisResult): Promise<boolean> {
   if (!db) return false;
   await db

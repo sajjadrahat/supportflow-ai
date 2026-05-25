@@ -81,6 +81,7 @@ export interface AnalysisResult {
   escalation: EscalationSummary | null;
   mode: "openai" | "guided-demo";
   persisted: boolean;
+  cached?: boolean;
 }
 
 export type FeedbackAction =

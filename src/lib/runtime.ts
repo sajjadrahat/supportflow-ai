@@ -2,6 +2,8 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export interface RuntimeBindings {
   DB?: D1Database;
+  ANALYZE_RATE_LIMITER?: RateLimit;
+  FEEDBACK_RATE_LIMITER?: RateLimit;
   OPENAI_API_KEY?: string;
   OPENAI_MODEL?: string;
   USE_DEMO_AI_FALLBACK?: string;

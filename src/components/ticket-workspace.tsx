@@ -6,7 +6,7 @@ import type { AnalysisResult, FeedbackAction, Ticket, Urgency } from "@/lib/type
 import { DecisionCard } from "@/components/decision-card";
 
 function urgencyClass(urgency: Urgency) {
-  return urgency === "High" || urgency === "Critical" ? "bg-red-50 text-red-700" : urgency === "Medium" ? "bg-amber-50 text-amber-700" : "bg-slate-100 text-slate-600";
+  return urgency === "High" || urgency === "Critical" ? "bg-[#f6e1d9] text-[#933c27]" : urgency === "Medium" ? "bg-[#efe7d4] text-[#85621e]" : "bg-[#e5ece8] text-[#426158]";
 }
 
 export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
@@ -73,97 +73,109 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
   }
 
   return (
-    <div className="mt-8 grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
-      <aside className="card h-fit p-6 lg:sticky lg:top-5">
+    <div className="mt-10 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+      <aside className="card h-fit overflow-hidden lg:sticky lg:top-5">
+        <div className="panel-dark px-6 py-5">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#88aaa1]">Incoming case</p>
+          <p className="mt-3 font-mono text-sm text-[#a5dacb]">{ticket.id}</p>
+        </div>
+        <div className="p-6">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{ticket.id}</p>
-            <h2 className="mt-2 text-lg font-semibold">{ticket.subject}</h2>
+            <h2 className="text-xl font-semibold leading-snug">{ticket.subject}</h2>
           </div>
           <span className={`pill ${urgencyClass(ticket.initialUrgency)}`}>{ticket.initialUrgency}</span>
         </div>
-        <dl className="mt-6 grid grid-cols-2 gap-4 border-y py-5 text-sm">
-          <div><dt className="text-slate-500">Customer</dt><dd className="mt-1 font-medium">{ticket.customerName}</dd></div>
-          <div><dt className="text-slate-500">Organization</dt><dd className="mt-1 font-medium">{ticket.customerCompany}</dd></div>
-          <div><dt className="text-slate-500">Created</dt><dd className="mt-1">{new Date(ticket.createdAt).toLocaleString()}</dd></div>
-          <div><dt className="text-slate-500">Status</dt><dd className="mt-1">{ticket.status}</dd></div>
+        <dl className="mt-7 grid grid-cols-2 gap-5 border-y py-5 text-sm">
+          <div><dt className="eyebrow">Customer</dt><dd className="mt-2 font-medium">{ticket.customerName}</dd></div>
+          <div><dt className="eyebrow">Organization</dt><dd className="mt-2 font-medium">{ticket.customerCompany}</dd></div>
+          <div><dt className="eyebrow">Received</dt><dd className="mt-2 text-[#59645f]">{new Date(ticket.createdAt).toLocaleDateString()}</dd></div>
+          <div><dt className="eyebrow">Status</dt><dd className="mt-2 text-[#59645f]">{ticket.status}</dd></div>
         </dl>
-        <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-slate-500">Original message</p>
-        <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-slate-700">{ticket.body}</p>
+        <p className="eyebrow mt-6">Customer message</p>
+        <p className="mt-4 whitespace-pre-wrap text-sm leading-7 text-[#4d5955]">{ticket.body}</p>
+        </div>
       </aside>
 
       <section className="space-y-5" aria-label="AI analysis workspace">
         {!analysis && (
-          <div className="card p-8 text-center">
-            <h2 className="text-xl font-semibold">Ready for triage</h2>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-600">
-              Analysis begins only after you choose to run it. Any draft or escalation remains a suggestion for human review.
+          <div className="panel-dark rounded-[1.5rem] p-8 sm:p-11">
+            <p className="text-xs uppercase tracking-[0.2em] text-[#86a59c]">Assisted review</p>
+            <h2 className="display mt-5 text-4xl">Prepare case intelligence</h2>
+            <p className="mt-4 max-w-lg text-sm leading-7 text-[#bac8c3]">
+              Retrieve documented guidance and prepare a reviewed recommendation. Saved analyses are reused to keep this public demo cost controlled.
             </p>
             <button
               type="button"
               onClick={analyze}
               disabled={loading}
-              className="mt-7 rounded-lg bg-[#142c54] px-5 py-3 font-medium text-white hover:bg-[#203e70] disabled:opacity-60"
+              className="mt-8 rounded-full bg-[#e5efe8] px-6 py-3 font-semibold text-[#17332e] hover:bg-white disabled:opacity-60"
             >
               {loading ? "Analyzing ticket..." : "Analyze with AI"}
             </button>
           </div>
         )}
 
-        {error && <div className="rounded-xl border border-red-100 bg-red-50 p-4 text-sm text-red-700" role="alert">{error}</div>}
-        {notice && <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-4 text-sm text-emerald-700" role="status">{notice}</div>}
+        {error && <div className="rounded-2xl border border-[#efc0b2] bg-[#f6e1d9] p-4 text-sm text-[#8c3624]" role="alert">{error}</div>}
+        {notice && <div className="rounded-2xl border border-[#badbce] bg-[#def1e9] p-4 text-sm text-[#155b4e]" role="status">{notice}</div>}
 
         {analysis && (
           <>
-            <div className="card p-6">
+            <div className="card overflow-hidden">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b bg-[#f0ece3] px-6 py-4">
+                <p className="eyebrow">Triage recommendation</p>
+                {analysis.cached && <span className="pill bg-[#e4ece7] text-[#48645b]">Saved analysis reused / no new AI call</span>}
+              </div>
+              <div className="p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">AI triage suggestion</p>
-                  <h2 className="mt-2 text-xl font-semibold">{analysis.triage.category}</h2>
+                  <h2 className="display text-3xl">{analysis.triage.category}</h2>
                 </div>
                 <div className="flex gap-2">
                   <span className={`pill ${urgencyClass(analysis.triage.urgency)}`}>{analysis.triage.urgency}</span>
-                  <span className="pill bg-blue-50 text-blue-700">{Math.round(analysis.triage.confidence * 100)}% confidence</span>
+                  <span className="pill bg-[#def1e9] text-[#155b4e]">{Math.round(analysis.triage.confidence * 100)}% confidence</span>
                 </div>
               </div>
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 <div>
-                  <p className="text-xs font-semibold text-slate-500">ISSUE SUMMARY</p>
+                  <p className="eyebrow">Issue summary</p>
                   <p className="mt-2 text-sm leading-6">{analysis.triage.summary}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-500">CUSTOMER INDICATOR</p>
+                  <p className="eyebrow">Customer indicator</p>
                   <p className="mt-2 text-sm leading-6">{analysis.triage.sentiment}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-500">MISSING INFORMATION</p>
+                  <p className="eyebrow">Still needed</p>
                   {analysis.triage.missing_information.length ? (
-                    <ul className="mt-2 space-y-1 text-sm text-slate-700">
+                    <ul className="mt-3 space-y-2 text-sm text-[#4d5955]">
                       {analysis.triage.missing_information.map((item) => <li key={item}>- {item}</li>)}
                     </ul>
-                  ) : <p className="mt-2 text-sm text-slate-500">No additional information requested.</p>}
+                  ) : <p className="mt-2 text-sm text-[#68716c]">No additional information requested.</p>}
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-500">REASONING SUMMARY</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-700">{analysis.triage.reasoning_summary}</p>
+                  <p className="eyebrow">Why this path</p>
+                  <p className="mt-2 text-sm leading-6 text-[#4d5955]">{analysis.triage.reasoning_summary}</p>
                 </div>
               </div>
-              <p className="mt-5 text-xs text-slate-500">
+              <p className="mt-6 border-t pt-4 text-xs text-[#68716c]">
                 Generation mode: {analysis.mode === "openai" ? "OpenAI structured output" : "Guided local demo output (no API key configured)"}.
               </p>
+              </div>
             </div>
 
             <section className="card p-6" aria-label="Retrieved knowledge articles">
-              <h2 className="text-lg font-semibold">Relevant Knowledge</h2>
+              <p className="eyebrow">Evidence</p>
+              <h2 className="display mt-3 text-3xl">Retrieved knowledge</h2>
               {analysis.articles.length ? (
                 <div className="mt-4 space-y-3">
                   {analysis.articles.map((article) => (
-                    <article className="rounded-xl border p-4" key={article.id}>
+                    <article className="rounded-2xl border bg-[#faf7ef] p-4" key={article.id}>
                       <div className="flex items-center justify-between gap-4">
-                        <Link className="text-sm font-semibold text-[#305b9d] hover:underline" href={`/demo/knowledge/${article.id}`}>{article.title}</Link>
-                        <span className="pill bg-slate-100 text-slate-600">{article.relevance}% match</span>
+                        <Link className="text-sm font-semibold text-[#15715f] hover:underline" href={`/demo/knowledge/${article.id}`}>{article.title}</Link>
+                        <span className="pill bg-[#e4ece7] text-[#48645b]">{article.relevance}% match</span>
                       </div>
-                      <p className="mt-2 text-sm leading-6 text-slate-600">{article.excerpt}</p>
+                      <p className="mt-2 text-sm leading-6 text-[#59645f]">{article.excerpt}</p>
                     </article>
                   ))}
                 </div>
@@ -172,13 +184,13 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
 
             <section className="card p-6">
               <div className="flex flex-wrap justify-between gap-3">
-                <h2 className="text-lg font-semibold">Draft Customer Reply</h2>
-                <span className="pill bg-blue-50 text-blue-700">AI draft - review before sending</span>
+                <div><p className="eyebrow">Response preparation</p><h2 className="display mt-3 text-3xl">Draft reply</h2></div>
+                <span className="pill h-fit bg-[#efe7d4] text-[#80601e]">Review before sending</span>
               </div>
               <label className="sr-only" htmlFor="draft-reply">Editable drafted customer reply</label>
               <textarea
                 id="draft-reply"
-                className="input mt-4 min-h-72 resize-y font-sans text-sm leading-6"
+                className="input mt-5 min-h-72 resize-y bg-[#faf7ef] font-sans text-sm leading-7"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
               />
@@ -189,8 +201,8 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
             {analysis.escalation && (
               <section className="card p-6" aria-label="Engineering escalation summary">
                 <div className="flex items-center justify-between gap-3">
-                  <h2 className="text-lg font-semibold">Engineering Escalation Summary</h2>
-                  <button className="rounded-lg border px-3 py-2 text-sm font-medium hover:bg-slate-50" type="button" onClick={copyEscalation}>Copy summary</button>
+                  <div><p className="eyebrow">Internal handoff</p><h2 className="display mt-3 text-3xl">Engineering brief</h2></div>
+                  <button className="btn-secondary" type="button" onClick={copyEscalation}>Copy summary</button>
                 </div>
                 <dl className="mt-5 space-y-4 text-sm">
                   <div><dt className="font-semibold text-slate-500">Issue summary</dt><dd className="mt-1">{analysis.escalation.issue_summary}</dd></div>
@@ -206,12 +218,13 @@ export function TicketWorkspace({ ticket }: { ticket: Ticket }) {
             )}
 
             <section className="card p-6" aria-label="Human feedback">
-              <h2 className="text-lg font-semibold">Human Feedback</h2>
-              <p className="mt-2 text-sm text-slate-600">Record whether this suggestion helped. Feedback contributes only to demo usage statistics.</p>
+              <p className="eyebrow">Review checkpoint</p>
+              <h2 className="display mt-3 text-3xl">Human feedback</h2>
+              <p className="mt-3 text-sm text-[#59645f]">Record whether this suggestion helped. Feedback contributes only to demo usage statistics.</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 {(["Approve Draft", "Edit Draft", "Escalate", "Mark Suggestion Incorrect"] as FeedbackAction[]).map((action) => (
                   <button
-                    className="rounded-lg border bg-white px-4 py-2.5 text-sm font-medium hover:border-slate-400 disabled:opacity-50"
+                    className="btn-secondary disabled:opacity-50"
                     disabled={feedbackLoading !== null}
                     key={action}
                     type="button"

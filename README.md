@@ -4,6 +4,8 @@ AI-assisted support triage and escalation demo built with Next.js, TypeScript, C
 
 **Portfolio context:** Built by Sajjad M. Rahat as a public demonstration of support workflow design, retrieval-grounded AI assistance and deployable full-stack implementation.
 
+**Live demo:** [supportflow.sajjadrahat.com](https://supportflow.sajjadrahat.com)
+
 ## Problem Addressed
 
 Support teams need to turn incoming issue reports into safe, useful next actions: understand urgency, locate applicable documentation, request missing details and escalate product-impacting cases cleanly. SupportFlow AI demonstrates that workflow without handling real customer information.
@@ -31,6 +33,7 @@ Add portfolio screenshots after deployment:
 - Feedback actions stored in Cloudflare D1
 - Demo analytics dashboard showing analysis and feedback counts
 - API input validation and basic per-client analysis rate protection
+- Cloudflare endpoint rate limits and one stored AI generation per seeded ticket to prevent repeat API spend
 - Guided local output path when an OpenAI API key is intentionally not configured
 
 ## User Workflow
@@ -157,7 +160,10 @@ Official references:
 - When no suitable article exists, the system recommends human review instead of generating unsupported troubleshooting.
 - Drafts are editable and visibly marked **AI draft - review before sending**.
 - Escalations remain suggestions and require a human feedback action.
-- A lightweight in-process limiter protects analysis requests in the MVP. A public production deployment should additionally configure Cloudflare rate limiting and optionally Turnstile.
+- Cloudflare Rate Limiting bindings protect the analysis and feedback endpoints from bursts.
+- A D1 generation lock ensures each fixed sample ticket creates at most one stored OpenAI analysis; subsequent visitors reuse it without a new model call.
+- Responses are bounded with `max_output_tokens` and sent with OpenAI storage disabled.
+- Optional Turnstile remains a future addition if the demo accepts custom input later.
 
 ## Tests
 

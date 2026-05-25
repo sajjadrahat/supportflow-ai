@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f7f9;
-  --foreground: #121826;
-  --muted: #5f6b7a;
-  --border: #e2e6ec;
-  --brand: #142c54;
-  --brand-soft: #eaf0fb;
+  --background: #f4f1ea;
+  --foreground: #152329;
+  --muted: #68716c;
+  --border: #ddd7c9;
+  --brand: #10252b;
+  --brand-soft: #e7eee9;
+  --signal: #15715f;
+  --signal-soft: #def1e9;
+  --sand: #ece5d8;
+  --surface: #fffdf8;
 }
 
 * {
@@ -16,7 +20,8 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
+  background-image: radial-gradient(circle at 12% 0%, rgb(21 113 95 / 0.07), transparent 34%);
 }
 
 a {
@@ -33,32 +38,98 @@ button:disabled {
 
 .card {
   border: 1px solid var(--border);
-  border-radius: 1rem;
-  background: white;
-  box-shadow: 0 1px 2px rgb(18 24 38 / 0.04);
+  border-radius: 1.35rem;
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgb(17 32 38 / 0.04), 0 16px 45px rgb(17 32 38 / 0.035);
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
   border-radius: 9999px;
-  padding: 0.25rem 0.65rem;
+  padding: 0.3rem 0.72rem;
   font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .input {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 0.65rem;
-  background: white;
-  padding: 0.65rem 0.75rem;
+  border-radius: 0.8rem;
+  background: var(--surface);
+  padding: 0.72rem 0.8rem;
   color: var(--foreground);
 }
 
 .input:focus,
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #305b9d;
+  outline: 2px solid var(--signal);
   outline-offset: 2px;
+}
+
+.display {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+
+.eyebrow {
+  color: var(--signal);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--brand);
+  padding: 0.8rem 1.3rem;
+  color: white;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #1a353b;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: 0.78rem 1.25rem;
+  color: var(--foreground);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  border-color: #b7af9d;
+}
+
+.panel-dark {
+  background: var(--brand);
+  color: #f8f3e8;
+}
+
+.rule-grid {
+  background-image:
+    linear-gradient(rgb(21 35 41 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(21 35 41 / 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.metric-value {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  letter-spacing: -0.06em;
 }

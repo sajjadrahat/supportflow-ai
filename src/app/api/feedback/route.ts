@@ -27,6 +27,12 @@ export async function POST(request: Request) {
 
   try {
     const bindings = await getRuntimeBindings();
+    if (bindings.FEEDBACK_RATE_LIMITER) {
+      const { success } = await bindings.FEEDBACK_RATE_LIMITER.limit({ key: "public-demo:feedback" });
+      if (!success) {
+        return NextResponse.json({ error: "Feedback limit reached. Please try again in one minute." }, { status: 429 });
+      }
+    }
     const persisted = await saveFeedback(bindings.DB, {
       id: crypto.randomUUID(),
       analysisId: parsed.data.analysisId,
